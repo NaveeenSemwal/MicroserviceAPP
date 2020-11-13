@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  catalog.api:
+    image: aspnetdocker/catalogapi:v1
+    build:
+      context: .
+      dockerfile: Catalog.API/Dockerfile
+    depends_on:
+      - catalogdb
+
+  catalogdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    restart: always
+    environment:
+       ACCEPT_EULA: "Y"
+       SA_PASSWORD: "dotvik@987"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlbackup:/home/node/app
+
+volumes:
+  sqlbackup:
