@@ -45,7 +45,7 @@ namespace Catalog.API
 
             services.AddSwaggerGen(x =>
             {
-                x.SwaggerDoc("v1", new OpenApiInfo { Title = "Banking Microservice", Version = "v1" });
+                x.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog Microservice", Version = "v1" });
             });
 
         }
@@ -66,7 +66,7 @@ namespace Catalog.API
 
             app.UseSwaggerUI(x =>
             {
-                x.SwaggerEndpoint("/swagger/v1/swagger.json", "Banking Microservice v1");
+                x.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog Microservice v1");
 
             });
 

@@ -1,3 +1,5 @@
+using Basket.API.Data;
+using Basket.API.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Connections;
@@ -6,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
@@ -28,10 +31,18 @@ namespace Basket.API
         {
             services.AddSingleton<ConnectionMultiplexer>(Sp =>
             {
-                var configuration = ConfigurationOptions.Parse(Configuration.GetConnectionString("Redis"),true);
+                // This is how the we populate ConnectionMultiplexer, so that it can be injected using DI.
+                var configuration = ConfigurationOptions.Parse(Configuration.GetConnectionString("Redis"), true);
 
                 return ConnectionMultiplexer.Connect(configuration);
+            });
 
+            services.AddTransient<IBasketDbContext, BasketDbContext>();
+            services.AddTransient<IBasketRepository, BasketRepository>();
+
+            services.AddSwaggerGen(x =>
+            {
+                x.SwaggerDoc("v1", new OpenApiInfo { Title = "Basket Microservice", Version = "v1" });
             });
 
             services.AddControllers();
@@ -46,6 +57,14 @@ namespace Basket.API
             }
 
             app.UseRouting();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(x =>
+            {
+                x.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket Microservice v1");
+
+            });
 
             app.UseAuthorization();
 

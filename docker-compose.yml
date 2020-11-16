@@ -8,6 +8,8 @@ services:
       dockerfile: Catalog.API/Dockerfile
     depends_on:
       - catalogdb
+    ports:
+      - "8000:80"
 
   catalogdb:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
@@ -19,6 +21,22 @@ services:
       - "1433:1433"
     volumes:
       - sqlbackup:/home/node/app
+
+  basket.api:
+    image: aspnetdocker/basketapi:v1
+    build:
+      context: .
+      dockerfile: Basket.API/Dockerfile
+    depends_on:
+      - basketdb
+    ports:
+      - "8001:80"
+  
+  basketdb:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
 
 volumes:
   sqlbackup:

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Basket.API.Data
 {
-    public class BasketDbContext
+    public class BasketDbContext : IBasketDbContext
     {
         private readonly ConnectionMultiplexer _connection;
 
