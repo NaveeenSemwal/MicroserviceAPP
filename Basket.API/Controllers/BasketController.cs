@@ -80,6 +80,9 @@ namespace Basket.API.Controllers
 
             var eventMessage = _mapper.Map<BasketCheckoutEvent>(basketCheckout);
 
+            eventMessage.RequestId = Guid.NewGuid();
+            eventMessage.TotalPrice = basket.TotalPrice;
+
             try
             {
                 _eventBus.PublishBasketCheckout(EventBusConstants.BasketCheckoutQueue, eventMessage);
