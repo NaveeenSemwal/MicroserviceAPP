@@ -1,6 +1,8 @@
+using AutoMapper;
 using Basket.API.Data;
 using Basket.API.Repositories;
 using EventBusRabbitMQ;
+using EventBusRabbitMQ.Producer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Connections;
@@ -42,6 +44,8 @@ namespace Basket.API
             services.AddTransient<IBasketDbContext, BasketDbContext>();
             services.AddTransient<IBasketRepository, BasketRepository>();
 
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddSwaggerGen(x =>
             {
                 x.SwaggerDoc("v1", new OpenApiInfo { Title = "Basket Microservice", Version = "v1" });
@@ -57,6 +61,8 @@ namespace Basket.API
                 };
                 return new RabbitMQConnection(factory);
             });
+
+            services.AddSingleton<EventBusRabbitMQProducer>();
 
             services.AddControllers();
         }
