@@ -1,5 +1,6 @@
 using Basket.API.Data;
 using Basket.API.Repositories;
+using EventBusRabbitMQ;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Connections;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RabbitMQ.Client;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
@@ -43,6 +45,17 @@ namespace Basket.API
             services.AddSwaggerGen(x =>
             {
                 x.SwaggerDoc("v1", new OpenApiInfo { Title = "Basket Microservice", Version = "v1" });
+            });
+
+            services.AddSingleton<IRabbitMQConnection>(sp =>
+            {
+                var factory = new ConnectionFactory()
+                {
+                    HostName = Configuration["EventBus:HostName"],
+                    UserName = Configuration["EventBus:UserName"],
+                    Password = Configuration["EventBus:Password"]
+                };
+                return new RabbitMQConnection(factory);
             });
 
             services.AddControllers();
