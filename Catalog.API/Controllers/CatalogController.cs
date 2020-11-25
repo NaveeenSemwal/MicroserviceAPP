@@ -33,7 +33,7 @@ namespace Catalog.API.Controllers
         /// http://localhost:5000/api/Catalog
         /// </summary>
         /// <returns></returns>
-        
+
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Product>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
@@ -50,6 +50,18 @@ namespace Catalog.API.Controllers
 
             return CreatedAtRoute("GetProduct", new { id = product.Id }, product);
         }
+
+
+        // https://stackoverflow.com/questions/20369361/asp-net-web-api-cannot-get-application-x-www-form-urlencoded-http-post
+
+        //[HttpPost]
+        //[Route("[action]")]
+        //[ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
+        //[Consumes("application/x-www-form-urlencoded")]
+        //public ActionResult test([FromForm]string name)
+        //{
+        //    return Ok(name);
+        //}
 
     }
 }
