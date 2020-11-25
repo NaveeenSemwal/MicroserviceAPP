@@ -3,6 +3,7 @@ version: '3.4'
 services:
   catalog.api:
     image: aspnetdocker/catalogapi:v1
+    container_name: catalog.api.container
     build:
       context: .
       dockerfile: Catalog.API/Dockerfile
@@ -13,6 +14,7 @@ services:
 
   catalogdb:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    container_name: catalog.db.container
     restart: always
     environment:
        ACCEPT_EULA: "Y"
@@ -20,10 +22,11 @@ services:
     ports:
       - "1433:1433"
     volumes:
-      - sqlbackup:/home/node/app
+      - C:/MicroserviceAPP/data:/var/opt/mssql/data
 
   basket.api:
     image: aspnetdocker/basketapi:v1
+    container_name: basket.api.container
     build:
       context: .
       dockerfile: Basket.API/Dockerfile
@@ -34,9 +37,8 @@ services:
   
   basketdb:
     image: redis
+    container_name: basket.db.container
     restart: always
     ports:
       - "6379:6379"
 
-volumes:
-  sqlbackup:
