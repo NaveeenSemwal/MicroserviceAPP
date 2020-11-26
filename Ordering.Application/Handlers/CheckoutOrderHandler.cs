@@ -29,9 +29,9 @@ namespace Ordering.Application.Handlers
             {
                 throw new ApplicationException("order is null");
             }
-            await _orderRepository.AddAsync(order);
+            var response = await _orderRepository.AddAsync(order);
 
-            OrderResponse orderResponse = OrderMapper.Mapper.Map<OrderResponse>(request);
+            OrderResponse orderResponse = OrderMapper.Mapper.Map<OrderResponse>(response);
 
             return orderResponse;
         }

@@ -17,9 +17,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ordering", "Ordering", "{51
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Core", "Ordering.Core\Ordering.Core.csproj", "{D6565B39-A95B-4883-8DEB-FCC078F7B14F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Application", "Ordering.Application\Ordering.Application.csproj", "{33AAB8FF-FA70-4E7D-9A54-7F4F28C3F3F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Application", "Ordering.Application\Ordering.Application.csproj", "{33AAB8FF-FA70-4E7D-9A54-7F4F28C3F3F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Infrastructure", "Ordering.Infrastructure\Ordering.Infrastructure.csproj", "{CDFC5FF5-6191-4DE4-90AB-598CC8CBD264}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Infrastructure", "Ordering.Infrastructure\Ordering.Infrastructure.csproj", "{CDFC5FF5-6191-4DE4-90AB-598CC8CBD264}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.API", "Authentication.API\Authentication.API.csproj", "{698026F3-40C4-434D-AE56-E21B06CBB5A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{CDFC5FF5-6191-4DE4-90AB-598CC8CBD264}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDFC5FF5-6191-4DE4-90AB-598CC8CBD264}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDFC5FF5-6191-4DE4-90AB-598CC8CBD264}.Release|Any CPU.Build.0 = Release|Any CPU
+		{698026F3-40C4-434D-AE56-E21B06CBB5A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{698026F3-40C4-434D-AE56-E21B06CBB5A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{698026F3-40C4-434D-AE56-E21B06CBB5A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{698026F3-40C4-434D-AE56-E21B06CBB5A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
