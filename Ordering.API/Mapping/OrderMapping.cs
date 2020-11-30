@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using EventBusRabbitMQ.Events;
+using Microsoft.AspNetCore.Mvc;
+using Ordering.Application.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +13,7 @@ namespace Ordering.API.Mapping
     {
         public OrderMapping()
         {
-
+            CreateMap<BasketCheckoutEvent, CheckoutOrderCommand>().ReverseMap();
         }
     }
 }

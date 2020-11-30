@@ -1,25 +1,23 @@
 using AutoMapper;
+using EventBusRabbitMQ;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Ordering.API.Extentions;
+using Ordering.API.RabbitMQ;
 using Ordering.Application.Handlers;
 using Ordering.Core.Repositories;
 using Ordering.Core.Repositories.Base;
 using Ordering.Infrastructure.Data;
 using Ordering.Infrastructure.Repository;
 using Ordering.Infrastructure.Repository.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using RabbitMQ.Client;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Ordering.API
 {
@@ -58,6 +56,23 @@ namespace Ordering.API
             });
 
             #endregion
+
+
+            #region RabbitMQ bus
+            services.AddSingleton<IRabbitMQConnection>(sp =>
+               {
+                   var factory = new ConnectionFactory()
+                   {
+                       HostName = Configuration["EventBus:HostName"],
+                       UserName = Configuration["EventBus:UserName"],
+                       Password = Configuration["EventBus:Password"]
+                   };
+                   return new RabbitMQConnection(factory);
+               });
+
+            services.AddSingleton<EventBusRabbitMQConsumer>(); 
+            #endregion
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,6 +97,8 @@ namespace Ordering.API
             {
                 endpoints.MapControllers();
             });
+
+            app.UseRabbitMQListner();
         }
     }
 }
