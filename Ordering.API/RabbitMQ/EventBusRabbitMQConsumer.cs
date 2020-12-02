@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Ordering.Application.Commands;
 using Ordering.Core.Repositories;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,7 @@ namespace Ordering.API.RabbitMQ
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += Consumer_Received;
 
-            channel.BasicConsume(EventBusConstants.BasketCheckoutQueue, true, null, false, false, null, consumer);
+            channel.BasicConsume(queue: EventBusConstants.BasketCheckoutQueue, autoAck: true, consumer: consumer);
 
         }
 
