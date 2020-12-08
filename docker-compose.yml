@@ -1,20 +1,9 @@
 version: '3.4'
 
 services:
-  catalog.api:
-    image: aspnetdocker/catalogapi:v1
-    container_name: catalog.api.container
-    build:
-      context: .
-      dockerfile: Catalog.API/Dockerfile
-    depends_on:
-      - catalogdb
-    ports:
-      - "8000:80"
-
-  catalogdb:
+  sqldb:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
-    container_name: catalog.db.container
+    container_name: sql.db.container
     restart: always
     environment:
        ACCEPT_EULA: "Y"
@@ -23,18 +12,7 @@ services:
       - "1433:1433"
     volumes:
       - C:/MicroserviceAPP/data:/var/opt/mssql/data
-
-  basket.api:
-    image: aspnetdocker/basketapi:v1
-    container_name: basket.api.container
-    build:
-      context: .
-      dockerfile: Basket.API/Dockerfile
-    depends_on:
-      - basketdb
-    ports:
-      - "8001:80"
-  
+   
   basketdb:
     image: redis
     container_name: basket.db.container
@@ -42,3 +20,49 @@ services:
     ports:
       - "6379:6379"
 
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  catalog.api:
+    image: aspnetdocker/catalogapi:v1
+    container_name: catalog.api.container
+    build:
+      context: .
+      dockerfile: Catalog.API/Dockerfile
+    depends_on:
+      - sqldb
+    ports:
+      - "8000:80"
+  
+  ordering.api:
+    image: aspnetdocker/orderapi:v1
+    container_name: order.api.container
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Ordering.API/Dockerfile
+    depends_on:
+      - rabbitmq
+      - sqldb
+    ports:
+      - "8002:80"
+ 
+  basket.api:
+    image: aspnetdocker/basketapi:v1
+    container_name: basket.api.container
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Basket.API/Dockerfile
+    depends_on:
+      - basketdb
+      - rabbitmq
+    ports:
+      - "8001:80"
+  
+  
