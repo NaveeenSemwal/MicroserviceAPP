@@ -31,6 +31,7 @@ services:
   catalog.api:
     image: aspnetdocker/catalogapi:v1
     container_name: catalog.api.container
+    restart: on-failure
     build:
       context: .
       dockerfile: Catalog.API/Dockerfile
@@ -65,4 +66,17 @@ services:
     ports:
       - "8001:80"
   
+  ocelotapi.gateway:
+    image: ${DOCKER_REGISTRY-}ocelotapigateway
+    container_name: ocelotapi.gateway.container
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: OcelotAPI.Gateway/Dockerfile
+    depends_on:
+      - basket.api
+      - catalog.api
+      - ordering.api
+    ports:
+      - "7000:80"
   
