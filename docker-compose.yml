@@ -1,21 +1,42 @@
 version: '3.4'
 
 services:
-  sqldb:
+  orderdb:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
-    container_name: sql.db.container
+    container_name: sql.orderdb.container
+    restart: always
+    environment:
+       ACCEPT_EULA: "Y"
+       SA_PASSWORD: "dotvik@987"
+
+    ports:
+      - "1433:1433"
+    volumes:
+      - C:/MicroserviceAPP/data:/var/opt/mssql/data
+   
+  authenticationdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    container_name: sql.authdb.container
     restart: always
     environment:
        ACCEPT_EULA: "Y"
        SA_PASSWORD: "dotvik@987"
     ports:
       - "1433:1433"
-    volumes:
-      - C:/MicroserviceAPP/data:/var/opt/mssql/data
-   
+
+  catalogdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    container_name: sql.catalogdb.container
+    restart: always
+    environment:
+       ACCEPT_EULA: "Y"
+       SA_PASSWORD: "dotvik@987"
+    ports:
+      - "1433:1433"
+
   basketdb:
     image: redis
-    container_name: basket.db.container
+    container_name: basket.redisdb.container
     restart: always
     ports:
       - "6379:6379"
@@ -36,7 +57,7 @@ services:
       context: .
       dockerfile: Catalog.API/Dockerfile
     depends_on:
-      - sqldb
+      - catalogdb
     ports:
       - "8000:80"
   
@@ -49,7 +70,7 @@ services:
       dockerfile: Ordering.API/Dockerfile
     depends_on:
       - rabbitmq
-      - sqldb
+      - orderdb
     ports:
       - "8002:80"
  

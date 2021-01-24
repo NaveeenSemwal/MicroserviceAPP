@@ -32,7 +32,7 @@ namespace Catalog.API
         {
             services.AddControllers();
 
-            services.Configure<CatalogDatabaseSettings>(Configuration.GetSection("CatalogDatabaseSettings"));
+            services.Configure<CatalogDatabaseSettings>(Configuration.GetSection("CatalogConnection"));
 
             // https://hassantariqblog.wordpress.com/2017/02/20/asp-net-core-step-by-step-guide-to-access-appsettings-json-in-web-project-and-class-library/
             services.AddSingleton<ICatalogDatabaseSettings>(sp => sp.GetRequiredService<IOptions<CatalogDatabaseSettings>>().Value);

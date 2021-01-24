@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotAPI.Gateway", "OcelotAPI.Gateway\OcelotAPI.Gateway.csproj", "{72F95210-A00D-4B43-9A90-B43A38C42D41}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.API", "..\ECommerceAPP\AuthenticationService\Authentication.API.csproj", "{AA4C6574-FDD0-4ED6-8989-A2DCFC62BFC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.API", "Authentication.API\Authentication.API.csproj", "{0742EB63-982A-48BA-A50D-5B7EFDCC2CCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,10 +67,10 @@ Global
 		{72F95210-A00D-4B43-9A90-B43A38C42D41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72F95210-A00D-4B43-9A90-B43A38C42D41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72F95210-A00D-4B43-9A90-B43A38C42D41}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA4C6574-FDD0-4ED6-8989-A2DCFC62BFC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA4C6574-FDD0-4ED6-8989-A2DCFC62BFC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA4C6574-FDD0-4ED6-8989-A2DCFC62BFC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA4C6574-FDD0-4ED6-8989-A2DCFC62BFC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0742EB63-982A-48BA-A50D-5B7EFDCC2CCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0742EB63-982A-48BA-A50D-5B7EFDCC2CCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0742EB63-982A-48BA-A50D-5B7EFDCC2CCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0742EB63-982A-48BA-A50D-5B7EFDCC2CCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
