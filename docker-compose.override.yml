@@ -1,32 +1,16 @@
 version: '3.4'
 
 services:
-  catalog.api:
+ authentication.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:UserConnection=Server=authenticationdb;Initial Catalog=UserDb;Persist Security Info=False;User ID=SA;Password=dotvik@987"
+    ports:
+      - "80"
+
+ catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:CatalogConnection=Server=catalogdb;Initial Catalog=CatalogDb;Persist Security Info=False;User ID=SA;Password=dotvik@987"
     ports:
       - "80"
-
-  basket.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:Redis=basketdb,abortConnect=false"
-      - "EventBus:HostName=rabbitmq"
-    ports:
-      - "80"
-
-  ordering.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:OrderConnection=Server=orderdb;Initial Catalog=OrderDb;Persist Security Info=False;User ID=SA;Password=dotvik@987"
-      - "EventBus:HostName=rabbitmq"
-    ports:
-      - "80"
-
-  ocelotapi.gateway:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80"
-

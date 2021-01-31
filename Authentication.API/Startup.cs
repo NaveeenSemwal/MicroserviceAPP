@@ -29,7 +29,7 @@ namespace AuthenticationService
         {
             services.AddDbContext<DatabaseContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("UserConnection"));
             });
 
             services.AddControllers();

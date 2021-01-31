@@ -1,20 +1,7 @@
 version: '3.4'
 
 services:
-  orderdb:
-    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
-    container_name: sql.orderdb.container
-    restart: always
-    environment:
-       ACCEPT_EULA: "Y"
-       SA_PASSWORD: "dotvik@987"
-
-    ports:
-      - "1433:1433"
-    volumes:
-      - C:/MicroserviceAPP/data:/var/opt/mssql/data
-   
-  authenticationdb:
+ authenticationdb:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     container_name: sql.authdb.container
     restart: always
@@ -22,9 +9,9 @@ services:
        ACCEPT_EULA: "Y"
        SA_PASSWORD: "dotvik@987"
     ports:
-      - "1433:1433"
+      - "1435:1433"
 
-  catalogdb:
+ catalogdb:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     container_name: sql.catalogdb.container
     restart: always
@@ -32,16 +19,28 @@ services:
        ACCEPT_EULA: "Y"
        SA_PASSWORD: "dotvik@987"
     ports:
-      - "1433:1433"
+      - "1434:1433"
 
-  basketdb:
+ basketdb:
     image: redis
     container_name: basket.redisdb.container
     restart: always
     ports:
       - "6379:6379"
 
-  rabbitmq:
+ orderdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    container_name: sql.orderdb.container
+    restart: always
+    environment:
+       ACCEPT_EULA: "Y"
+       SA_PASSWORD: "dotvik@987"
+    ports:
+      - "1436:1433"
+    volumes:
+      - C:/MicroserviceAPP/data:/var/opt/mssql/data
+
+ rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq
     restart: always
@@ -49,7 +48,19 @@ services:
       - "5672:5672"
       - "15672:15672"
 
-  catalog.api:
+ authentication.api:
+    image: aspnetdocker/authapi:v1
+    container_name: authentication.api.container
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Authentication.API/Dockerfile
+    depends_on:
+      - authenticationdb
+    ports:
+      - "8000:80"
+
+ catalog.api:
     image: aspnetdocker/catalogapi:v1
     container_name: catalog.api.container
     restart: on-failure
@@ -59,22 +70,9 @@ services:
     depends_on:
       - catalogdb
     ports:
-      - "8000:80"
-  
-  ordering.api:
-    image: aspnetdocker/orderapi:v1
-    container_name: order.api.container
-    restart: on-failure
-    build:
-      context: .
-      dockerfile: Ordering.API/Dockerfile
-    depends_on:
-      - rabbitmq
-      - orderdb
-    ports:
-      - "8002:80"
- 
-  basket.api:
+      - "8001:80"
+
+ basket.api:
     image: aspnetdocker/basketapi:v1
     container_name: basket.api.container
     restart: on-failure
@@ -85,19 +83,17 @@ services:
       - basketdb
       - rabbitmq
     ports:
-      - "8001:80"
-  
-  ocelotapi.gateway:
-    image: ${DOCKER_REGISTRY-}ocelotapigateway
-    container_name: ocelotapi.gateway.container
+      - "8002:80"
+
+ ordering.api:
+    image: aspnetdocker/orderapi:v1
+    container_name: order.api.container
     restart: on-failure
     build:
       context: .
-      dockerfile: OcelotAPI.Gateway/Dockerfile
+      dockerfile: Ordering.API/Dockerfile
     depends_on:
-      - basket.api
-      - catalog.api
-      - ordering.api
+      - rabbitmq
+      - orderdb
     ports:
-      - "7000:80"
-  
+      - "8003:80"

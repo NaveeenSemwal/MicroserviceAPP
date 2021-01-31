@@ -13,7 +13,8 @@ namespace Catalog.API.Data
     public static class ModelBuilderExtensions
     {
         /// <summary>
-        /// After this you need to Add the migration i.e  Add-Migration SeedInitialData
+        /// Note : After this you need to Add the migration i.e  Add-Migration SeedInitialData
+        ///        Otherwise data will not be inserted.
         /// </summary>
         /// <param name="modelBuilder"></param>
         public static void Seed(this ModelBuilder modelBuilder)

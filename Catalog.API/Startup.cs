@@ -39,7 +39,7 @@ namespace Catalog.API
 
 
             services.AddDbContextPool<CatalogDbContext>(option =>
-            option.UseSqlServer(Configuration["CatalogDatabaseSettings:ConnectionString"]));
+            option.UseSqlServer(Configuration["ConnectionStrings:CatalogConnection"]));
 
             services.AddTransient<IProductRepository, ProductRepository>();
 

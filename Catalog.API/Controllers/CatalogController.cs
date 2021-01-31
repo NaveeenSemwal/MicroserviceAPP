@@ -30,7 +30,7 @@ namespace Catalog.API.Controllers
         }
 
         /// <summary>
-        /// http://localhost:5000/api/Catalog
+        /// http://localhost:8000/api/Catalog
         /// </summary>
         /// <returns></returns>
 

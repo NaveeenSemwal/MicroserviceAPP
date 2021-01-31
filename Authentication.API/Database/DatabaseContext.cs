@@ -36,6 +36,11 @@ namespace AuthenticationService.Database
                 .HasOne(ur => ur.Role)
                 .WithMany(r => r.UserRoles)
                 .HasForeignKey(ur => ur.RoleId);
+
+
+            modelBuilder.Seed();
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
